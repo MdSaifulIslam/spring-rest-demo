@@ -20,7 +20,7 @@ public class StudentController {
 
 	@PostConstruct
 	public void loadStudents() {
-		
+
 		theStudents = new ArrayList<>();
 
 		theStudents.add(new Student("saiful", "islam"));
@@ -34,12 +34,15 @@ public class StudentController {
 		return theStudents;
 
 	}
-	
+
 	@GetMapping("/student/{studentId}")
 	public Student getStudent(@PathVariable int studentId) {
-		
-		return theStudents.get(studentId);
-		
-	}
 
+		if (studentId >= theStudents.size() || studentId < 0) {
+			throw new StudentNotFoundException("The student id [" + studentId + "] not found");
+		}
+
+		return theStudents.get(studentId);
+
+	}
 }
